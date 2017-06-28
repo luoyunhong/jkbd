@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/main_menu_exam"
             android:text="随机测试"
+            android:onClick="test"
             android:background="@null"/>
         <Button
             android:layout_width="match_parent"
