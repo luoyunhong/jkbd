@@ -52,7 +52,7 @@ public class ExamInfo {
 
     @Override
     public String toString() {
-        return "考试科目：" + subjectTitle + "\n" +" 考试时间：" + limitTime + "分钟" +
+        return "考试科目：" + subjectTitle + "\n" +"考试时间：" + limitTime + "分钟" +
                 "\n"+"考题数量：" + questionCount ;
     }
 }

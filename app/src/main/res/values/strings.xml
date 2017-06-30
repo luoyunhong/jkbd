@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">驾考宝典</string>
-    <string name="app_question">"考试科目：C1\n""考试时间：30分钟\n""考题数量：100"</string>
+    <string name="app_question">"考试科目：C1\n""考试时间：10分钟\n""考题数量：100"</string>
 </resources>
