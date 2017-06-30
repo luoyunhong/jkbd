@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.example.administrator.jkbd.QuestionApplication;
 import com.example.administrator.jkbd.R;
 import com.example.administrator.jkbd.bean.ExamInfo;
+import com.example.administrator.jkbd.bean.Question;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/29.
@@ -33,7 +36,10 @@ public class QuestionActivity extends AppCompatActivity{
         if(examInfo!=null){
             showData(examInfo);
         }
+        List<Question> questionList = QuestionApplication.getInstance().getmQuestionList();
+        if(questionList!=null){
 
+        }
     }
 
     private void showData(ExamInfo examInfo) {

@@ -35,6 +35,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_exam_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="这个标志是和含义？"
@@ -42,6 +43,7 @@
             android:textSize="18sp"/>
     </LinearLayout>
     <ImageView
+        android:id="@+id/im_exam_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:src="@mipmap/a"
@@ -58,6 +60,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_op1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="十字交叉路口预告"
@@ -76,6 +79,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_op2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="互通式立体交叉预告"
@@ -94,6 +98,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_op3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Y型交叉路口预告"
@@ -112,6 +117,7 @@
             android:textColor="#000"
             android:textSize="18sp"/>
         <TextView
+            android:id="@+id/tv_op4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="环行交叉路口预告"
