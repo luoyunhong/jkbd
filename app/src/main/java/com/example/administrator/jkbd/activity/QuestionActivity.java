@@ -11,6 +11,7 @@ import com.example.administrator.jkbd.QuestionApplication;
 import com.example.administrator.jkbd.R;
 import com.example.administrator.jkbd.bean.ExamInfo;
 import com.example.administrator.jkbd.bean.Question;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -58,6 +59,9 @@ public class QuestionActivity extends AppCompatActivity{
             tvop2.setText(question.getItem2());
             tvop3.setText(question.getItem3());
             tvop4.setText(question.getItem4());
+            Picasso.with(QuestionActivity.this)
+                    .load(question.getUrl())
+                    .into(mImageView);
         }
     }
 
