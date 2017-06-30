@@ -4,6 +4,7 @@ import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.jkbd.QuestionApplication;
@@ -18,7 +19,8 @@ import java.util.List;
  */
 
 public class QuestionActivity extends AppCompatActivity{
-    TextView tvExamInfo;
+    TextView tvExamInfo,tvExamtitle,tvop1,tvop2,tvop3,tvop4;
+    ImageView mImageView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,12 @@ public class QuestionActivity extends AppCompatActivity{
 
     private void initView() {
         tvExamInfo= (TextView) findViewById(R.id.tv_examinfo);
+        tvExamtitle= (TextView) findViewById(R.id.tv_exam_title);
+        tvop1= (TextView) findViewById(R.id.tv_op1);
+        tvop2= (TextView) findViewById(R.id.tv_op2);
+        tvop3= (TextView) findViewById(R.id.tv_op3);
+        tvop4= (TextView) findViewById(R.id.tv_op4);
+        mImageView= (ImageView) findViewById(R.id.im_exam_image);
     }
 
     private void initData() {
@@ -38,7 +46,18 @@ public class QuestionActivity extends AppCompatActivity{
         }
         List<Question> questionList = QuestionApplication.getInstance().getmQuestionList();
         if(questionList!=null){
+            showQuestion(questionList);
+        }
+    }
 
+    private void showQuestion(List<Question> questionList) {
+        Question question = questionList.get(0);
+        if(questionList!=null){
+            tvExamtitle.setText(question.getQuestion());
+            tvop1.setText(question.getItem1());
+            tvop2.setText(question.getItem2());
+            tvop3.setText(question.getItem3());
+            tvop4.setText(question.getItem4());
         }
     }
 
