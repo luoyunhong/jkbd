@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:drawableRight="@mipmap/exam_next32x32"
             android:background="@null"
-            android:text="上一题"
+            android:text="下一题"
             android:layout_alignParentRight="true"
             android:textColor="#000"
             android:textSize="18sp"/>
