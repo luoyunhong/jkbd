@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 public class QuestionActivity extends AppCompatActivity {
-    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4,tvLoad;
+    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4,tvLoad,tvNo;
     LinearLayout layoutLoading;
     ImageView mImageView;
     ProgressBar dialog;
@@ -79,6 +79,7 @@ public class QuestionActivity extends AppCompatActivity {
         dialog= (ProgressBar) findViewById(R.id.load_dialog);
         tvExamInfo = (TextView) findViewById(R.id.tv_examinfo);
         tvExamtitle = (TextView) findViewById(R.id.tv_exam_title);
+        tvNo= (TextView) findViewById(R.id.tv_exam_no);
         tvop1 = (TextView) findViewById(R.id.tv_op1);
         tvop2 = (TextView) findViewById(R.id.tv_op2);
         tvop3 = (TextView) findViewById(R.id.tv_op3);
@@ -101,10 +102,7 @@ public class QuestionActivity extends AppCompatActivity {
                 if (examInfo != null) {
                     showData(examInfo);
                 }
-                List<Question> questionList = QuestionApplication.getInstance().getmQuestionList();
-                if (questionList != null) {
-                    showQuestion(questionList);
-                }
+                showQuestion(biz.getExam());
             }else {
                 layoutLoading.setEnabled(true);
                 dialog.setVisibility(View.GONE);
@@ -113,17 +111,22 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void showQuestion(List<Question> questionList) {
-        Question question = questionList.get(0);
-        if (questionList != null) {
+    private void showQuestion(Question question) {
+        Log.e("showQuestion","showQuestion,question="+question);
+        if (question != null) {
+            tvNo.setText(biz.getExamIndex());
             tvExamtitle.setText(question.getQuestion());
             tvop1.setText(question.getItem1());
             tvop2.setText(question.getItem2());
             tvop3.setText(question.getItem3());
             tvop4.setText(question.getItem4());
-            Picasso.with(QuestionActivity.this)
-                    .load(question.getUrl())
-                    .into(mImageView);
+            if(question.getUrl()!=null && !question.getUrl().equals("")){
+                Picasso.with(QuestionActivity.this)
+                        .load(question.getUrl())
+                        .into(mImageView);
+            }else {
+                mImageView.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -140,6 +143,14 @@ public class QuestionActivity extends AppCompatActivity {
         if(mLoadQuestionBroadcast!=null){
             unregisterReceiver(mLoadQuestionBroadcast);
         }
+    }
+
+    public void preExam(View view) {
+        showQuestion(biz.preQuestion());
+    }
+
+    public void nextExam(View view) {
+        showQuestion(biz.nextQuestion());
     }
 
     class LoadExamBroadcast extends BroadcastReceiver {

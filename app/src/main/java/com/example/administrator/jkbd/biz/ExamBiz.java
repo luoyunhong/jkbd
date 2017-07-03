@@ -25,11 +25,12 @@ public class ExamBiz implements IExamBiz {
         examIndex=0;
         dao.loadExamInfo();
         dao.loadQuestionLists();
-       questionList = QuestionApplication.getInstance().getmQuestionList();
+
     }
 
     @Override
     public Question getExam() {
+        questionList = QuestionApplication.getInstance().getmQuestionList();
         if(questionList!=null){
             return questionList.get(examIndex);
         }else {
@@ -60,5 +61,10 @@ public class ExamBiz implements IExamBiz {
     @Override
     public void commitExam() {
 
+    }
+
+    @Override
+    public String getExamIndex() {
+        return (examIndex+1)+".";
     }
 }
