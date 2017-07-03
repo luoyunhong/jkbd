@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.jkbd.QuestionApplication;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity {
     TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4;
+    LinearLayout layoutLoading;
     ImageView mImageView;
     IExamBiz biz;
 
@@ -64,6 +66,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        layoutLoading= (LinearLayout) findViewById(R.id.layout_loading);
         tvExamInfo = (TextView) findViewById(R.id.tv_examinfo);
         tvExamtitle = (TextView) findViewById(R.id.tv_exam_title);
         tvop1 = (TextView) findViewById(R.id.tv_op1);
