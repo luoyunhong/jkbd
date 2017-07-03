@@ -1,7 +1,11 @@
 package com.example.administrator.jkbd.biz;
 
+import com.example.administrator.jkbd.QuestionApplication;
+import com.example.administrator.jkbd.bean.Question;
 import com.example.administrator.jkbd.dao.ExamDao;
 import com.example.administrator.jkbd.dao.IExamDao;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/2.
@@ -9,6 +13,8 @@ import com.example.administrator.jkbd.dao.IExamDao;
 
 public class ExamBiz implements IExamBiz {
     IExamDao dao;
+    int examIndex=0;
+    List<Question> questionList =null;
 
     public ExamBiz() {
         this.dao = new ExamDao();
@@ -16,18 +22,39 @@ public class ExamBiz implements IExamBiz {
 
     @Override
     public void beginExam() {
+        examIndex=0;
         dao.loadExamInfo();
         dao.loadQuestionLists();
+       questionList = QuestionApplication.getInstance().getmQuestionList();
     }
 
     @Override
-    public void nextQuestion() {
-
+    public Question getExam() {
+        if(questionList!=null){
+            return questionList.get(examIndex);
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public void preQuestion() {
+    public Question nextQuestion() {
+        if(questionList!=null && examIndex<questionList.size()-1){
+            examIndex++;
+            return questionList.get(examIndex);
+        }else {
+            return null;
+        }
+    }
 
+    @Override
+    public Question preQuestion() {
+        if(questionList!=null && examIndex>0){
+            examIndex--;
+            return questionList.get(examIndex);
+        }else {
+            return null;
+        }
     }
 
     @Override

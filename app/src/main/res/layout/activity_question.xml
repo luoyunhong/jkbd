@@ -179,6 +179,7 @@
             android:drawableLeft="@mipmap/exam_pre32x32"
             android:background="@null"
             android:text="上一题"
+            android:onClick="preExam"
             android:layout_alignParentLeft="true"
             android:textColor="#000"
             android:textSize="18sp"/>
@@ -189,6 +190,7 @@
             android:drawableRight="@mipmap/exam_next32x32"
             android:background="@null"
             android:text="下一题"
+            android:onClick="nextExam"
             android:layout_alignParentRight="true"
             android:textColor="#000"
             android:textSize="18sp"/>
