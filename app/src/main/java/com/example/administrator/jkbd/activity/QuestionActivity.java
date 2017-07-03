@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,13 +29,16 @@ import java.util.List;
  */
 
 public class QuestionActivity extends AppCompatActivity {
-    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4;
+    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4,tvLoad;
     LinearLayout layoutLoading;
     ImageView mImageView;
     IExamBiz biz;
 
     boolean isLoadExamInfo = false;
     boolean isLoadQuestions = false;
+
+    boolean isLoadExamInfoReceiver = false;
+    boolean isLoadQuestionsReceiver = false;
 
     LoadExamBroadcast mLoadExamBroadcast;
     LoadQuestionBroadcast mLoadQuestionBroadcast;
@@ -73,18 +77,24 @@ public class QuestionActivity extends AppCompatActivity {
         tvop2 = (TextView) findViewById(R.id.tv_op2);
         tvop3 = (TextView) findViewById(R.id.tv_op3);
         tvop4 = (TextView) findViewById(R.id.tv_op4);
+        tvLoad = (TextView) findViewById(R.id.tv_load);
         mImageView = (ImageView) findViewById(R.id.im_exam_image);
     }
 
     private void initData() {
-        if (isLoadExamInfo && isLoadQuestions) {
-            ExamInfo examInfo = QuestionApplication.getInstance().getmExamInfo();
-            if (examInfo != null) {
-                showData(examInfo);
-            }
-            List<Question> questionList = QuestionApplication.getInstance().getmQuestionList();
-            if (questionList != null) {
-                showQuestion(questionList);
+        if(isLoadExamInfoReceiver && isLoadQuestionsReceiver){
+            if (isLoadExamInfo && isLoadQuestions) {
+                layoutLoading.setVisibility(View.GONE);
+                ExamInfo examInfo = QuestionApplication.getInstance().getmExamInfo();
+                if (examInfo != null) {
+                    showData(examInfo);
+                }
+                List<Question> questionList = QuestionApplication.getInstance().getmQuestionList();
+                if (questionList != null) {
+                    showQuestion(questionList);
+                }
+            }else {
+                tvLoad.setText("下载失败，点击重新下载");
             }
         }
     }
@@ -127,6 +137,7 @@ public class QuestionActivity extends AppCompatActivity {
             if (isSuccess) {
                 isLoadExamInfo = true;
             }
+            isLoadExamInfoReceiver=true;
             initData();
         }
     }
@@ -140,6 +151,7 @@ public class QuestionActivity extends AppCompatActivity {
                 if (isSuccess) {
                     isLoadQuestions = true;
                 }
+                isLoadQuestionsReceiver=true;
                 initData();
             }
         }
