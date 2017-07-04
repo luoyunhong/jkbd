@@ -165,15 +165,24 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void initTimer(ExamInfo examInfo) {
         int sumTime=examInfo.getLimitTime()*60*1000;
-
-        final int overTime= (int) (sumTime+System.currentTimeMillis());
+        Log.e("time","sumTime="+sumTime);
+        final long overTime= sumTime+System.currentTimeMillis();
+        Log.e("time","overTime="+overTime);
         Timer timer=new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 long l = overTime - System.currentTimeMillis();
-                int min= (int) (l/1000/60);
-                int sec= (int) (l/1000%60);
+                Log.e("time","l="+l);
+                final long min= l/1000/60;
+                final long sec= l/1000%60;
+                Log.e("time","min="+min+",sec="+sec);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvTime.setText("剩余时间："+min+"分"+sec+"秒");
+                    }
+                });
             }
         },0,1000);
     }
