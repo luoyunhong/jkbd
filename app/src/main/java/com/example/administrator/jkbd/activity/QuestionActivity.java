@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -25,6 +26,7 @@ import com.example.administrator.jkbd.bean.ExamInfo;
 import com.example.administrator.jkbd.bean.Question;
 import com.example.administrator.jkbd.biz.ExamBiz;
 import com.example.administrator.jkbd.biz.IExamBiz;
+import com.example.administrator.jkbd.view.QuestionAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,7 +44,9 @@ public class QuestionActivity extends AppCompatActivity {
     LinearLayout layoutLoading,layout03,layout04;
     ImageView mImageView;
     ProgressBar dialog;
+    Gallery mGallery;
     IExamBiz biz;
+    QuestionAdapter mAdapter;
 
     boolean isLoadExamInfo = false;
     boolean isLoadQuestions = false;
@@ -90,6 +94,7 @@ public class QuestionActivity extends AppCompatActivity {
         tvExamInfo = (TextView) findViewById(R.id.tv_examinfo);
         tvExamtitle = (TextView) findViewById(R.id.tv_exam_title);
         tvNo= (TextView) findViewById(R.id.tv_exam_no);
+        mGallery= (Gallery) findViewById(R.id.gallery);
         tvop1 = (TextView) findViewById(R.id.tv_op1);
         tvop2 = (TextView) findViewById(R.id.tv_op2);
         tvop3 = (TextView) findViewById(R.id.tv_op3);
@@ -154,6 +159,7 @@ public class QuestionActivity extends AppCompatActivity {
                     showData(examInfo);
                     initTimer(examInfo);
                 }
+                initGallery();
                 showQuestion(biz.getExam());
             }else {
                 layoutLoading.setEnabled(true);
@@ -161,6 +167,11 @@ public class QuestionActivity extends AppCompatActivity {
                 tvLoad.setText("下载失败，点击重新下载");
             }
         }
+    }
+
+    private void initGallery() {
+        mAdapter=new QuestionAdapter(this);
+        mGallery.setAdapter(mAdapter);
     }
 
     private void initTimer(ExamInfo examInfo) {
