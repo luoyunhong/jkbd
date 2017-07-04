@@ -3,10 +3,12 @@ package com.example.administrator.jkbd.activity;
 import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,13 +28,15 @@ import com.example.administrator.jkbd.biz.IExamBiz;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Administrator on 2017/6/29.
  */
 
 public class QuestionActivity extends AppCompatActivity {
-    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4,tvLoad,tvNo;
+    TextView tvExamInfo, tvExamtitle, tvop1, tvop2, tvop3, tvop4,tvLoad,tvNo,tvTime;
     CheckBox cb01,cb02,cb03,cb04;
     CheckBox[] cbs=new CheckBox[4];
     LinearLayout layoutLoading,layout03,layout04;
@@ -148,6 +152,7 @@ public class QuestionActivity extends AppCompatActivity {
                 ExamInfo examInfo = QuestionApplication.getInstance().getmExamInfo();
                 if (examInfo != null) {
                     showData(examInfo);
+                    initTimer(examInfo);
                 }
                 showQuestion(biz.getExam());
             }else {
@@ -158,6 +163,22 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    private void initTimer(ExamInfo examInfo) {
+        int sumTime=examInfo.getLimitTime()*60*1000;
+
+        final int overTime= (int) (sumTime+System.currentTimeMillis());
+        Timer timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                long l = overTime - System.currentTimeMillis();
+                int min= (int) (l/1000/60);
+                int sec= (int) (l/1000%60);
+            }
+        },0,1000);
+    }
+
+
     private void showQuestion(Question question) {
         Log.e("showQuestion","showQuestion,question="+question);
         if (question != null) {
@@ -167,6 +188,7 @@ public class QuestionActivity extends AppCompatActivity {
             tvop2.setText(question.getItem2());
             tvop3.setText(question.getItem3());
             tvop4.setText(question.getItem4());
+            tvTime= (TextView) findViewById(R.id.tv_time);
             layout03.setVisibility(question.getItem3().equals("")?View.GONE:View.VISIBLE);
             cb03.setVisibility(question.getItem3().equals("")?View.GONE:View.VISIBLE);
             layout04.setVisibility(question.getItem4().equals("")?View.GONE:View.VISIBLE);
@@ -226,6 +248,26 @@ public class QuestionActivity extends AppCompatActivity {
     public void nextExam(View view) {
         saveUserAnswer();
         showQuestion(biz.nextQuestion());
+    }
+
+    public void commit(View view) {
+        saveUserAnswer();
+        int s = biz.commitExam();
+        View inflate=View.inflate(this,R.layout.layout_result,null);
+        TextView tvResult = (TextView) inflate.findViewById(R.id.tv_result);
+        tvResult.setText("你的分数为：\n"+s+"分！");
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.exam_commit32x32)
+                .setTitle("交卷")
+                //.setMessage("你的分数为：\n"+s+"分！")
+                .setView(inflate)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                });
+        builder.create().show();
     }
 
     class LoadExamBroadcast extends BroadcastReceiver {
