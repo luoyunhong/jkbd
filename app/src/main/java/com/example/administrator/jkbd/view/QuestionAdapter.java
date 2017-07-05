@@ -1,6 +1,7 @@
 package com.example.administrator.jkbd.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -45,6 +46,13 @@ public class QuestionAdapter extends BaseAdapter {
         View view = View.inflate(mContext, R.layout.item_question, null);
         TextView tvNo= (TextView) view.findViewById(R.id.tv_no);
         ImageView ivQuestion= (ImageView) view.findViewById(R.id.iv_question);
+        String ua=questionList.get(position).getUserAnswer();
+        Log.e("adapter","questionList.get(position)="+questionList.get(position));
+        if(ua!=null && !ua.equals("")){
+            ivQuestion.setImageResource(R.mipmap.answer24x24);
+        }else {
+            ivQuestion.setImageResource(R.mipmap.ques24x24);
+        }
         tvNo.setText("第"+(position+1)+"题");
         return view;
     }
