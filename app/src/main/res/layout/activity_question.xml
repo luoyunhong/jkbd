@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     tools:text="十字交叉路口预告"
                     android:textColor="#000"
-                    android:textSize="15sp"/>
+                    android:textSize="18sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
